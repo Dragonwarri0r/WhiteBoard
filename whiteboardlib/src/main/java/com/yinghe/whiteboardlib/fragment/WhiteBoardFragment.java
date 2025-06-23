@@ -54,6 +54,7 @@ import static com.yinghe.whiteboardlib.bean.StrokeRecord.STROKE_TYPE_CIRCLE;
 import static com.yinghe.whiteboardlib.bean.StrokeRecord.STROKE_TYPE_DRAW;
 import static com.yinghe.whiteboardlib.bean.StrokeRecord.STROKE_TYPE_ERASER;
 import static com.yinghe.whiteboardlib.bean.StrokeRecord.STROKE_TYPE_LINE;
+import static com.yinghe.whiteboardlib.bean.StrokeRecord.STROKE_TYPE_MOVE;
 import static com.yinghe.whiteboardlib.bean.StrokeRecord.STROKE_TYPE_RECTANGLE;
 import static com.yinghe.whiteboardlib.bean.StrokeRecord.STROKE_TYPE_TEXT;
 
@@ -100,6 +101,7 @@ public class WhiteBoardFragment extends Fragment implements SketchView.OnDrawCha
     ImageView btn_empty;//清空
     ImageView btn_send;//推送
     ImageView btn_send_space;//推送按钮间隔
+    ImageView btn_move;//推送按钮间隔
 
 
     RadioGroup strokeTypeRG, strokeColorRG;
@@ -517,6 +519,7 @@ public class WhiteBoardFragment extends Fragment implements SketchView.OnDrawCha
 
         btn_add = (ImageView) view.findViewById(R.id.btn_add);
         btn_stroke = (ImageView) view.findViewById(R.id.btn_stroke);
+        btn_move = (ImageView) view.findViewById(R.id.btn_move);
         btn_eraser = (ImageView) view.findViewById(R.id.btn_eraser);
         btn_undo = (ImageView) view.findViewById(R.id.btn_undo);
         btn_redo = (ImageView) view.findViewById(R.id.btn_redo);
@@ -545,6 +548,7 @@ public class WhiteBoardFragment extends Fragment implements SketchView.OnDrawCha
         btn_background.setOnClickListener(this);
         btn_drag.setOnClickListener(this);
         btn_send.setOnClickListener(this);
+        btn_move.setOnClickListener(this);
         mSketchView.setTextWindowCallback(new SketchView.TextWindowCallback() {
             @Override
             public void onText(View anchor, StrokeRecord record) {
@@ -657,7 +661,7 @@ public class WhiteBoardFragment extends Fragment implements SketchView.OnDrawCha
             }
             updateGV();
         } else if (id == R.id.btn_stroke) {
-            if (mSketchView.getEditMode() == SketchView.EDIT_STROKE && mSketchView.getStrokeType() != STROKE_TYPE_ERASER) {
+            if (mSketchView.getEditMode() == SketchView.EDIT_STROKE && mSketchView.getStrokeType() != STROKE_TYPE_ERASER && mSketchView.getStrokeType() != STROKE_TYPE_MOVE) {
                 showParamsPopupWindow(v, STROKE_TYPE_DRAW);
             } else {
                 int checkedId = strokeTypeRG.getCheckedRadioButtonId();
@@ -677,13 +681,17 @@ public class WhiteBoardFragment extends Fragment implements SketchView.OnDrawCha
             mSketchView.setEditMode(SketchView.EDIT_STROKE);
             showBtn(btn_stroke);
         } else if (id == R.id.btn_eraser) {
-            if (mSketchView.getEditMode() == SketchView.EDIT_STROKE && mSketchView.getStrokeType() == STROKE_TYPE_ERASER) {
+            if (mSketchView.getEditMode() == SketchView.EDIT_STROKE && mSketchView.getStrokeType() == STROKE_TYPE_ERASER && mSketchView.getStrokeType() == STROKE_TYPE_MOVE) {
                 showParamsPopupWindow(v, STROKE_TYPE_ERASER);
             } else {
                 mSketchView.setStrokeType(STROKE_TYPE_ERASER);
             }
             mSketchView.setEditMode(SketchView.EDIT_STROKE);
             showBtn(btn_eraser);
+        } else if (id == R.id.btn_move) {
+            mSketchView.setStrokeType(STROKE_TYPE_MOVE);
+            mSketchView.setEditMode(SketchView.EDIT_STROKE);
+            showBtn(btn_move);
         } else if (id == R.id.btn_undo) {
             mSketchView.undo();
         } else if (id == R.id.btn_redo) {

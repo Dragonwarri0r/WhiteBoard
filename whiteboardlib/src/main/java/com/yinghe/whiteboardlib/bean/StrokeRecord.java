@@ -13,6 +13,7 @@ public class StrokeRecord {
     public static final int STROKE_TYPE_CIRCLE = 4;
     public static final int STROKE_TYPE_RECTANGLE = 5;
     public static final int STROKE_TYPE_TEXT = 6;
+    public static final int STROKE_TYPE_MOVE = 7;
 
     public int type;//记录类型
     public Paint paint;//笔类
@@ -21,6 +22,7 @@ public class StrokeRecord {
     public RectF rect; //圆、矩形区域
     public String text;//文字
     public TextPaint textPaint;//笔类
+    public Path tmpPath;//临时路径
 
     public int textOffX;
     public int textOffY;

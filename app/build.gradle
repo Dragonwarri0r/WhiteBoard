@@ -1,13 +1,19 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    compileSdkVersion 34
+    compileOptions {
+        compileOptions {
+            //加入下面这两句就好了
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
 
     defaultConfig {
         applicationId "com.yinghe.testwb"
-        minSdkVersion 17
-        targetSdkVersion 23
+        minSdkVersion 23
+        targetSdkVersion 32
         versionCode 1
         versionName "1.0"
     }
@@ -20,11 +26,10 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':whiteboardlib')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.3.0'
-    compile 'com.android.support:design:23.3.0'
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':whiteboardlib')
+    api 'com.android.support:appcompat-v7:23.3.0'
+    api 'com.android.support:design:23.3.0'
 
 }
 repositories {
